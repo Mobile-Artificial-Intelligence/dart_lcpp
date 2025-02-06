@@ -30,8 +30,6 @@ class LlamaCppNative {
       nativeModelParams
     );
     assert(model.address != 0, 'Failed to load model');
-
-    malloc.free(nativeModelPath);
     log("Model loaded");
 
     final nativeContextParams = contextParams.toNative();
