@@ -1,8 +1,9 @@
 #include "api.h"
+#include <cassert>
 
-static llama_model * model;
-static llama_context * ctx;
-static llama_sampler * smpl;
+static llama_model * model = nullptr;
+static llama_context * ctx = nullptr;
+static llama_sampler * smpl = nullptr;
 
 struct api_params api_default_params() {
     auto default_model_params = llama_model_default_params();
@@ -61,16 +62,18 @@ struct api_params api_default_params() {
     return result;
 }
 
-int api_init(struct api_params params) {
-    ggml_backend_load_all();
-
+llama_model * llama_model_from_api_params(struct api_params params) {
     auto model_params = llama_model_default_params();
     model_params.vocab_only = params.vocab_only;
     model_params.use_mmap = params.use_mmap;
     model_params.use_mlock = params.use_mlock;
     model_params.check_tensors = params.check_tensors;
 
-    model = llama_model_load_from_file(params.model_path, model_params);
+    return llama_model_load_from_file(params.model_path, model_params);
+}
+
+llama_context * llama_context_from_api_params(struct api_params params) {
+    assert(model != nullptr);
 
     auto context_params = llama_context_default_params();
     context_params.n_ctx = params.n_ctx;
@@ -98,77 +101,93 @@ int api_init(struct api_params params) {
     context_params.flash_attn = params.flash_attn;
     context_params.no_perf = params.no_perf;
 
-    ctx = llama_init_from_model(model, context_params);
+    return llama_init_from_model(model, context_params);
+}
+
+llama_sampler * llama_sampler_from_api_params(struct api_params params) {
+    assert(model != nullptr);
 
     auto vocab = llama_model_get_vocab(model);
-    smpl = llama_sampler_chain_init(llama_sampler_chain_default_params());
+    auto sampler = llama_sampler_chain_init(llama_sampler_chain_default_params());
 
     if (params.greedy) {
-        llama_sampler_chain_add(smpl, llama_sampler_init_greedy());
+        llama_sampler_chain_add(sampler, llama_sampler_init_greedy());
     }
 
     if (params.infill) {
-        llama_sampler_chain_add(smpl, llama_sampler_init_infill(vocab));
+        llama_sampler_chain_add(sampler, llama_sampler_init_infill(vocab));
     }
 
     if (params.seed != LLAMA_DEFAULT_SEED) {
-        llama_sampler_chain_add(smpl, llama_sampler_init_dist(params.seed));
+        llama_sampler_chain_add(sampler, llama_sampler_init_dist(params.seed));
     }
 
     if (params.top_k > 0) {
-        llama_sampler_chain_add(smpl, llama_sampler_init_top_k(params.top_k));
+        llama_sampler_chain_add(sampler, llama_sampler_init_top_k(params.top_k));
     }
 
     if (params.top_p != nullptr) {
-        llama_sampler_chain_add(smpl, llama_sampler_init_top_p(params.top_p->p, params.top_p->min_keep));
+        llama_sampler_chain_add(sampler, llama_sampler_init_top_p(params.top_p->p, params.top_p->min_keep));
     }
 
     if (params.min_p != nullptr) {
-        llama_sampler_chain_add(smpl, llama_sampler_init_min_p(params.min_p->p, params.min_p->min_keep));
+        llama_sampler_chain_add(sampler, llama_sampler_init_min_p(params.min_p->p, params.min_p->min_keep));
     }
 
     if (params.typical_p != nullptr) {
-        llama_sampler_chain_add(smpl, llama_sampler_init_typical(params.typical_p->p, params.typical_p->min_keep));
+        llama_sampler_chain_add(sampler, llama_sampler_init_typical(params.typical_p->p, params.typical_p->min_keep));
     }
 
     if (params.temperature != nullptr) {
         if (params.temperature->delta != NULL && params.temperature->exponent != NULL) {
-            llama_sampler_chain_add(smpl, llama_sampler_init_temp_ext(params.temperature->temperature, params.temperature->delta, params.temperature->exponent));
+            llama_sampler_chain_add(sampler, llama_sampler_init_temp_ext(params.temperature->temperature, params.temperature->delta, params.temperature->exponent));
         } 
         else {
-            llama_sampler_chain_add(smpl, llama_sampler_init_temp(params.temperature->temperature));
+            llama_sampler_chain_add(sampler, llama_sampler_init_temp(params.temperature->temperature));
         }
     }
 
     if (params.xtc != nullptr) {
-        llama_sampler_chain_add(smpl, llama_sampler_init_xtc(params.xtc->probability, params.xtc->threshold, params.xtc->min_keep, params.xtc->seed));
+        llama_sampler_chain_add(sampler, llama_sampler_init_xtc(params.xtc->probability, params.xtc->threshold, params.xtc->min_keep, params.xtc->seed));
     }
 
     if (params.mirostat != nullptr) {
-        llama_sampler_chain_add(smpl, llama_sampler_init_mirostat(params.mirostat->n_vocab, params.mirostat->seed, params.mirostat->tau, params.mirostat->eta, params.mirostat->m));
+        llama_sampler_chain_add(sampler, llama_sampler_init_mirostat(params.mirostat->n_vocab, params.mirostat->seed, params.mirostat->tau, params.mirostat->eta, params.mirostat->m));
     }
 
     if (params.mirostat_v2 != nullptr) {
-        llama_sampler_chain_add(smpl, llama_sampler_init_mirostat_v2(params.mirostat_v2->seed, params.mirostat_v2->tau, params.mirostat_v2->eta));
+        llama_sampler_chain_add(sampler, llama_sampler_init_mirostat_v2(params.mirostat_v2->seed, params.mirostat_v2->tau, params.mirostat_v2->eta));
     }
 
     if (params.grammar != nullptr) {
-        llama_sampler_chain_add(smpl, llama_sampler_init_grammar(vocab, params.grammar->str, params.grammar->root));
+        llama_sampler_chain_add(sampler, llama_sampler_init_grammar(vocab, params.grammar->str, params.grammar->root));
     }
 
     if (params.grammar_lazy != nullptr) {
-        llama_sampler_chain_add(smpl, llama_sampler_init_grammar_lazy(vocab, params.grammar_lazy->str, params.grammar_lazy->root, params.grammar_lazy->trigger_words, params.grammar_lazy->num_trigger_words, params.grammar_lazy->trigger_tokens, params.grammar_lazy->num_trigger_tokens));
+        llama_sampler_chain_add(sampler, llama_sampler_init_grammar_lazy(vocab, params.grammar_lazy->str, params.grammar_lazy->root, params.grammar_lazy->trigger_words, params.grammar_lazy->num_trigger_words, params.grammar_lazy->trigger_tokens, params.grammar_lazy->num_trigger_tokens));
     }
 
     if (params.penalties != nullptr) {
-        llama_sampler_chain_add(smpl, llama_sampler_init_penalties(params.penalties->last_n, params.penalties->repeat, params.penalties->freq, params.penalties->present));
+        llama_sampler_chain_add(sampler, llama_sampler_init_penalties(params.penalties->last_n, params.penalties->repeat, params.penalties->freq, params.penalties->present));
     }
 
     if (params.dry != nullptr) {
-        llama_sampler_chain_add(smpl, llama_sampler_init_dry(vocab, params.dry->n_ctx_train, params.dry->multiplier, params.dry->base, params.dry->allowed_length, params.dry->penalty_last_n, params.dry->breakers, params.dry->num_breakers));
+        llama_sampler_chain_add(sampler, llama_sampler_init_dry(vocab, params.dry->n_ctx_train, params.dry->multiplier, params.dry->base, params.dry->allowed_length, params.dry->penalty_last_n, params.dry->breakers, params.dry->num_breakers));
     }
 
     if (params.logit_bias != nullptr) {
-        llama_sampler_chain_add(smpl, llama_sampler_init_logit_bias(params.logit_bias->n_vocab, params.logit_bias->n_logit_bias, params.logit_bias->logit_bias));
+        llama_sampler_chain_add(sampler, llama_sampler_init_logit_bias(params.logit_bias->n_vocab, params.logit_bias->n_logit_bias, params.logit_bias->logit_bias));
     }
+
+    return sampler;
+}
+
+int api_init(struct api_params params) {
+    ggml_backend_load_all();
+
+    model = llama_model_from_api_params(params);
+
+    ctx = llama_context_from_api_params(params);
+
+    smpl = llama_sampler_from_api_params(params);
 }

@@ -19,6 +19,59 @@ class llama {
           lookup)
       : _lookup = lookup;
 
+  int api_default_params() {
+    return _api_default_params();
+  }
+
+  late final _api_default_paramsPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function()>>('api_default_params');
+  late final _api_default_params =
+      _api_default_paramsPtr.asFunction<int Function()>();
+
+  int api_init(
+    api_params params,
+  ) {
+    return _api_init(
+      params,
+    );
+  }
+
+  late final _api_initPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(api_params)>>('api_init');
+  late final _api_init = _api_initPtr.asFunction<int Function(api_params)>();
+
+  int api_prompt(
+    ffi.Pointer<ffi.Int> msg,
+    int n_msg,
+  ) {
+    return _api_prompt(
+      msg,
+      n_msg,
+    );
+  }
+
+  late final _api_promptPtr = _lookup<
+          ffi.NativeFunction<ffi.Int Function(ffi.Pointer<ffi.Int>, ffi.Int)>>(
+      'api_prompt');
+  late final _api_prompt =
+      _api_promptPtr.asFunction<int Function(ffi.Pointer<ffi.Int>, int)>();
+
+  int api_stop() {
+    return _api_stop();
+  }
+
+  late final _api_stopPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function()>>('api_stop');
+  late final _api_stop = _api_stopPtr.asFunction<int Function()>();
+
+  int api_free() {
+    return _api_free();
+  }
+
+  late final _api_freePtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function()>>('api_free');
+  late final _api_free = _api_freePtr.asFunction<int Function()>();
+
   int renameat(
     int arg0,
     ffi.Pointer<ffi.Char> arg1,
@@ -14111,6 +14164,318 @@ class llama {
       _ggml_backend_cpu_regPtr.asFunction<ggml_backend_reg_t Function()>();
 }
 
+final class p_sampling_params extends ffi.Struct {
+  @ffi.Float()
+  external double p;
+
+  @ffi.Int()
+  external int min_keep;
+}
+
+final class temperature_sampling_params extends ffi.Struct {
+  @ffi.Float()
+  external double temperature;
+
+  @ffi.Float()
+  external double delta;
+
+  @ffi.Float()
+  external double exponent;
+}
+
+final class xtc_sampling_params extends ffi.Struct {
+  @ffi.Float()
+  external double probability;
+
+  @ffi.Float()
+  external double threshold;
+
+  @ffi.Int()
+  external int min_keep;
+
+  @ffi.Int()
+  external int seed;
+}
+
+final class mirostat_sampling_params extends ffi.Struct {
+  @ffi.Int()
+  external int n_vocab;
+
+  @ffi.Int()
+  external int seed;
+
+  @ffi.Float()
+  external double tau;
+
+  @ffi.Float()
+  external double eta;
+
+  @ffi.Int()
+  external int m;
+}
+
+final class mirostat_v2_sampling_params extends ffi.Struct {
+  @ffi.Int()
+  external int seed;
+
+  @ffi.Float()
+  external double tau;
+
+  @ffi.Float()
+  external double eta;
+}
+
+final class grammar_sampling_params extends ffi.Struct {
+  external ffi.Pointer<ffi.Char> str;
+
+  external ffi.Pointer<ffi.Char> root;
+}
+
+final class grammar_lazy_sampling_params extends ffi.Struct {
+  external ffi.Pointer<ffi.Char> str;
+
+  external ffi.Pointer<ffi.Char> root;
+
+  external ffi.Pointer<ffi.Pointer<ffi.Char>> trigger_words;
+
+  @ffi.Int()
+  external int num_trigger_words;
+
+  external ffi.Pointer<ffi.Int> trigger_tokens;
+
+  @ffi.Int()
+  external int num_trigger_tokens;
+}
+
+final class penalties_sampling_params extends ffi.Struct {
+  @ffi.Int()
+  external int last_n;
+
+  @ffi.Float()
+  external double repeat;
+
+  @ffi.Float()
+  external double freq;
+
+  @ffi.Float()
+  external double present;
+}
+
+final class dry_sampling_params extends ffi.Struct {
+  @ffi.Int()
+  external int n_ctx_train;
+
+  @ffi.Float()
+  external double multiplier;
+
+  @ffi.Float()
+  external double base;
+
+  @ffi.Int()
+  external int allowed_length;
+
+  @ffi.Int()
+  external int penalty_last_n;
+
+  external ffi.Pointer<ffi.Pointer<ffi.Char>> breakers;
+
+  @ffi.Int()
+  external int num_breakers;
+}
+
+final class logit_bias_sampling_params extends ffi.Struct {
+  @ffi.Int()
+  external int n_vocab;
+
+  @ffi.Int()
+  external int n_logit_bias;
+
+  external ffi.Pointer<ffi.Int> logit_bias;
+}
+
+final class api_params extends ffi.Struct {
+  external ffi.Pointer<ffi.Char> model_path;
+
+  @ffi.Int()
+  external int vocab_only;
+
+  @ffi.Int()
+  external int use_mmap;
+
+  @ffi.Int()
+  external int use_mlock;
+
+  @ffi.Int()
+  external int check_tensors;
+
+  @ffi.Int()
+  external int n_ctx;
+
+  @ffi.Int()
+  external int n_batch;
+
+  @ffi.Int()
+  external int n_ubatch;
+
+  @ffi.Int()
+  external int n_seq_max;
+
+  @ffi.Int()
+  external int n_threads;
+
+  @ffi.Int()
+  external int n_threads_batch;
+
+  @ffi.Int32()
+  external int rope_scaling_type;
+
+  @ffi.Int32()
+  external int pooling_type;
+
+  @ffi.Int32()
+  external int attention_type;
+
+  @ffi.Double()
+  external double rope_freq_base;
+
+  @ffi.Double()
+  external double rope_freq_scale;
+
+  @ffi.Double()
+  external double yarn_ext_factor;
+
+  @ffi.Double()
+  external double yarn_attn_factor;
+
+  @ffi.Double()
+  external double yarn_beta_fast;
+
+  @ffi.Double()
+  external double yarn_beta_slow;
+
+  @ffi.Int()
+  external int yarn_orig_ctx;
+
+  @ffi.Double()
+  external double defrag_thold;
+
+  @ffi.Int32()
+  external int type_k;
+
+  @ffi.Int32()
+  external int type_v;
+
+  @ffi.Int()
+  external int logits_all;
+
+  @ffi.Int()
+  external int embeddings;
+
+  @ffi.Int()
+  external int offload_kqv;
+
+  @ffi.Int()
+  external int flash_attn;
+
+  @ffi.Int()
+  external int no_perf;
+
+  @ffi.Int()
+  external int greedy;
+
+  @ffi.Int()
+  external int infill;
+
+  @ffi.Int()
+  external int seed;
+
+  @ffi.Int()
+  external int top_k;
+
+  external ffi.Pointer<p_sampling_params> top_p;
+
+  external ffi.Pointer<p_sampling_params> min_p;
+
+  external ffi.Pointer<p_sampling_params> typical_p;
+
+  external ffi.Pointer<temperature_sampling_params> temperature;
+
+  external ffi.Pointer<xtc_sampling_params> xtc;
+
+  external ffi.Pointer<mirostat_sampling_params> mirostat;
+
+  external ffi.Pointer<mirostat_v2_sampling_params> mirostat_v2;
+
+  external ffi.Pointer<grammar_sampling_params> grammar;
+
+  external ffi.Pointer<grammar_lazy_sampling_params> grammar_lazy;
+
+  external ffi.Pointer<penalties_sampling_params> penalties;
+
+  external ffi.Pointer<dry_sampling_params> dry;
+
+  external ffi.Pointer<logit_bias_sampling_params> logit_bias;
+}
+
+abstract class llama_rope_scaling_type {
+  static const int LLAMA_ROPE_SCALING_TYPE_UNSPECIFIED = -1;
+  static const int LLAMA_ROPE_SCALING_TYPE_NONE = 0;
+  static const int LLAMA_ROPE_SCALING_TYPE_LINEAR = 1;
+  static const int LLAMA_ROPE_SCALING_TYPE_YARN = 2;
+  static const int LLAMA_ROPE_SCALING_TYPE_LONGROPE = 3;
+  static const int LLAMA_ROPE_SCALING_TYPE_MAX_VALUE = 3;
+}
+
+abstract class llama_pooling_type {
+  static const int LLAMA_POOLING_TYPE_UNSPECIFIED = -1;
+  static const int LLAMA_POOLING_TYPE_NONE = 0;
+  static const int LLAMA_POOLING_TYPE_MEAN = 1;
+  static const int LLAMA_POOLING_TYPE_CLS = 2;
+  static const int LLAMA_POOLING_TYPE_LAST = 3;
+  static const int LLAMA_POOLING_TYPE_RANK = 4;
+}
+
+abstract class llama_attention_type {
+  static const int LLAMA_ATTENTION_TYPE_UNSPECIFIED = -1;
+  static const int LLAMA_ATTENTION_TYPE_CAUSAL = 0;
+  static const int LLAMA_ATTENTION_TYPE_NON_CAUSAL = 1;
+}
+
+abstract class ggml_type {
+  static const int GGML_TYPE_F32 = 0;
+  static const int GGML_TYPE_F16 = 1;
+  static const int GGML_TYPE_Q4_0 = 2;
+  static const int GGML_TYPE_Q4_1 = 3;
+  static const int GGML_TYPE_Q5_0 = 6;
+  static const int GGML_TYPE_Q5_1 = 7;
+  static const int GGML_TYPE_Q8_0 = 8;
+  static const int GGML_TYPE_Q8_1 = 9;
+  static const int GGML_TYPE_Q2_K = 10;
+  static const int GGML_TYPE_Q3_K = 11;
+  static const int GGML_TYPE_Q4_K = 12;
+  static const int GGML_TYPE_Q5_K = 13;
+  static const int GGML_TYPE_Q6_K = 14;
+  static const int GGML_TYPE_Q8_K = 15;
+  static const int GGML_TYPE_IQ2_XXS = 16;
+  static const int GGML_TYPE_IQ2_XS = 17;
+  static const int GGML_TYPE_IQ3_XXS = 18;
+  static const int GGML_TYPE_IQ1_S = 19;
+  static const int GGML_TYPE_IQ4_NL = 20;
+  static const int GGML_TYPE_IQ3_S = 21;
+  static const int GGML_TYPE_IQ2_S = 22;
+  static const int GGML_TYPE_IQ4_XS = 23;
+  static const int GGML_TYPE_I8 = 24;
+  static const int GGML_TYPE_I16 = 25;
+  static const int GGML_TYPE_I32 = 26;
+  static const int GGML_TYPE_I64 = 27;
+  static const int GGML_TYPE_F64 = 28;
+  static const int GGML_TYPE_IQ1_M = 29;
+  static const int GGML_TYPE_BF16 = 30;
+  static const int GGML_TYPE_TQ1_0 = 34;
+  static const int GGML_TYPE_TQ2_0 = 35;
+  static const int GGML_TYPE_COUNT = 39;
+}
+
 final class __mbstate_t extends ffi.Union {
   @ffi.Array.multi([128])
   external ffi.Array<ffi.Char> __mbstate8;
@@ -14468,30 +14833,6 @@ abstract class llama_ftype {
   static const int LLAMA_FTYPE_GUESSED = 1024;
 }
 
-abstract class llama_rope_scaling_type {
-  static const int LLAMA_ROPE_SCALING_TYPE_UNSPECIFIED = -1;
-  static const int LLAMA_ROPE_SCALING_TYPE_NONE = 0;
-  static const int LLAMA_ROPE_SCALING_TYPE_LINEAR = 1;
-  static const int LLAMA_ROPE_SCALING_TYPE_YARN = 2;
-  static const int LLAMA_ROPE_SCALING_TYPE_LONGROPE = 3;
-  static const int LLAMA_ROPE_SCALING_TYPE_MAX_VALUE = 3;
-}
-
-abstract class llama_pooling_type {
-  static const int LLAMA_POOLING_TYPE_UNSPECIFIED = -1;
-  static const int LLAMA_POOLING_TYPE_NONE = 0;
-  static const int LLAMA_POOLING_TYPE_MEAN = 1;
-  static const int LLAMA_POOLING_TYPE_CLS = 2;
-  static const int LLAMA_POOLING_TYPE_LAST = 3;
-  static const int LLAMA_POOLING_TYPE_RANK = 4;
-}
-
-abstract class llama_attention_type {
-  static const int LLAMA_ATTENTION_TYPE_UNSPECIFIED = -1;
-  static const int LLAMA_ATTENTION_TYPE_CAUSAL = 0;
-  static const int LLAMA_ATTENTION_TYPE_NON_CAUSAL = 1;
-}
-
 abstract class llama_split_mode {
   static const int LLAMA_SPLIT_MODE_NONE = 0;
   static const int LLAMA_SPLIT_MODE_LAYER = 1;
@@ -14673,41 +15014,6 @@ final class llama_context_params extends ffi.Struct {
   external int abort_callback;
 
   external ffi.Pointer<ffi.Void> abort_callback_data;
-}
-
-abstract class ggml_type {
-  static const int GGML_TYPE_F32 = 0;
-  static const int GGML_TYPE_F16 = 1;
-  static const int GGML_TYPE_Q4_0 = 2;
-  static const int GGML_TYPE_Q4_1 = 3;
-  static const int GGML_TYPE_Q5_0 = 6;
-  static const int GGML_TYPE_Q5_1 = 7;
-  static const int GGML_TYPE_Q8_0 = 8;
-  static const int GGML_TYPE_Q8_1 = 9;
-  static const int GGML_TYPE_Q2_K = 10;
-  static const int GGML_TYPE_Q3_K = 11;
-  static const int GGML_TYPE_Q4_K = 12;
-  static const int GGML_TYPE_Q5_K = 13;
-  static const int GGML_TYPE_Q6_K = 14;
-  static const int GGML_TYPE_Q8_K = 15;
-  static const int GGML_TYPE_IQ2_XXS = 16;
-  static const int GGML_TYPE_IQ2_XS = 17;
-  static const int GGML_TYPE_IQ3_XXS = 18;
-  static const int GGML_TYPE_IQ1_S = 19;
-  static const int GGML_TYPE_IQ4_NL = 20;
-  static const int GGML_TYPE_IQ3_S = 21;
-  static const int GGML_TYPE_IQ2_S = 22;
-  static const int GGML_TYPE_IQ4_XS = 23;
-  static const int GGML_TYPE_I8 = 24;
-  static const int GGML_TYPE_I16 = 25;
-  static const int GGML_TYPE_I32 = 26;
-  static const int GGML_TYPE_I64 = 27;
-  static const int GGML_TYPE_F64 = 28;
-  static const int GGML_TYPE_IQ1_M = 29;
-  static const int GGML_TYPE_BF16 = 30;
-  static const int GGML_TYPE_TQ1_0 = 34;
-  static const int GGML_TYPE_TQ2_0 = 35;
-  static const int GGML_TYPE_COUNT = 39;
 }
 
 final class llama_model_quantize_params extends ffi.Struct {

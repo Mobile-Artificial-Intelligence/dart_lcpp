@@ -25,6 +25,7 @@ ffigen:
   ignore-source-errors: true
   headers:
     entry-points:
+      - 'src/api.h'
       - 'src/llama_cpp/include/llama.h'
       - 'src/llama_cpp/ggml/include/ggml.h'
       - 'src/llama_cpp/ggml/include/ggml-cpu.h'
