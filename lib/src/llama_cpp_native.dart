@@ -19,6 +19,7 @@ class LlamaCppNative {
     ContextParams contextParams, 
     SamplingParams samplingParams
   ) {
+    lib.ggml_backend_load_all();
     lib.llama_backend_init();
     log("backend loaded");
 
@@ -30,6 +31,8 @@ class LlamaCppNative {
       nativeModelParams
     );
     assert(model.address != 0, 'Failed to load model');
+
+    malloc.free(nativeModelPath);
     log("Model loaded");
 
     final nativeContextParams = contextParams.toNative();

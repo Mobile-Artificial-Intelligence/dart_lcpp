@@ -6,7 +6,7 @@ struct p_sampling_params {
 };
 
 struct temperature_sampling_params {
-    float temperture;
+    float temperature;
     float delta;
     float exponent;
 };
