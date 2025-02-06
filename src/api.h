@@ -129,7 +129,7 @@ struct api_params {
     struct logit_bias_sampling_params logit_bias;
 };
 
-LLAMA_API struct api_params * api_default_params();
+LLAMA_API struct api_params api_default_params(void);
 
 LLAMA_API int api_init(struct api_params params);
 
