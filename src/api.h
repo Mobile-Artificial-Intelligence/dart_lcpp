@@ -128,3 +128,13 @@ struct api_params {
     struct dry_sampling_params dry;
     struct logit_bias_sampling_params logit_bias;
 };
+
+LLAMA_API struct api_params * api_default_params();
+
+LLAMA_API int api_init(struct api_params params);
+
+LLAMA_API int api_prompt(struct llama_chat_message * msg, size_t n_msg);
+
+LLAMA_API void api_stop(void);
+
+LLAMA_API void api_free(void);
