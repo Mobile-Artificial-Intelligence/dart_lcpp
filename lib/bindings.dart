@@ -41,20 +41,23 @@ class llama {
   late final _api_init = _api_initPtr.asFunction<int Function(api_params)>();
 
   int api_prompt(
-    ffi.Pointer<ffi.Int> msg,
+    ffi.Pointer<llama_chat_message> msg,
     int n_msg,
+    ffi.Pointer<dart_output> output,
   ) {
     return _api_prompt(
       msg,
       n_msg,
+      output,
     );
   }
 
   late final _api_promptPtr = _lookup<
-          ffi.NativeFunction<ffi.Int Function(ffi.Pointer<ffi.Int>, ffi.Int)>>(
-      'api_prompt');
-  late final _api_prompt =
-      _api_promptPtr.asFunction<int Function(ffi.Pointer<ffi.Int>, int)>();
+      ffi.NativeFunction<
+          ffi.Int Function(ffi.Pointer<llama_chat_message>, ffi.Int,
+              ffi.Pointer<dart_output>)>>('api_prompt');
+  late final _api_prompt = _api_promptPtr.asFunction<
+      int Function(ffi.Pointer<llama_chat_message>, int, ffi.Pointer<dart_output>)>();
 
   int api_stop() {
     return _api_stop();
@@ -63,6 +66,14 @@ class llama {
   late final _api_stopPtr =
       _lookup<ffi.NativeFunction<ffi.Int Function()>>('api_stop');
   late final _api_stop = _api_stopPtr.asFunction<int Function()>();
+
+  int api_reset() {
+    return _api_reset();
+  }
+
+  late final _api_resetPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function()>>('api_reset');
+  late final _api_reset = _api_resetPtr.asFunction<int Function()>();
 
   int api_free() {
     return _api_free();
@@ -14463,6 +14474,9 @@ abstract class ggml_type {
   static const int GGML_TYPE_TQ2_0 = 35;
   static const int GGML_TYPE_COUNT = 39;
 }
+
+typedef dart_output
+    = ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Char> buffer)>;
 
 final class __mbstate_t extends ffi.Union {
   @ffi.Array.multi([128])

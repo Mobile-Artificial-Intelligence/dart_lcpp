@@ -127,13 +127,17 @@ struct api_params {
     struct dry_sampling_params dry;
 };
 
+typedef void dart_output(const char *buffer);
+
 LLAMA_API struct api_params api_default_params(void);
 
 LLAMA_API int api_init(struct api_params params);
 
-LLAMA_API int api_prompt(llama_chat_message * msg, size_t n_msg);
+LLAMA_API int api_prompt(llama_chat_message * msg, size_t n_msg, dart_output * output);
 
 LLAMA_API void api_stop(void);
+
+LLAMA_API void api_reset(void);
 
 LLAMA_API void api_free(void);
 

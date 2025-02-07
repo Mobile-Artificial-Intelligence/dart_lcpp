@@ -21,6 +21,7 @@ class LlamaApp extends StatefulWidget {
 class _LlamaAppState extends State<LlamaApp> {
   final TextEditingController _controller = TextEditingController();
   final List<ChatMessage> _messages = [];
+  LlamaNative? _llama;
   String? _modelPath;
 
   void _loadModel() async {
@@ -42,7 +43,7 @@ class _LlamaAppState extends State<LlamaApp> {
       throw Exception('File does not exist');
     }
 
-    final llamaCpp = LlamaNative.fromParams(
+    _llama = LlamaNative.fromParams(
       LlamaParams(
         modelPath: result.files.single.path!,
         nCtx: 2048,
@@ -53,13 +54,23 @@ class _LlamaAppState extends State<LlamaApp> {
       )
     );
 
-    setState(() {
-      _modelPath = result.files.single.path;
-    });
+    setState(() => _modelPath = result.files.single.path);
   }
 
   void _onSubmitted(String value) async {
-    
+    if (_llama == null) {
+      throw Exception('Model not loaded');
+    }
+
+    _messages.add(ChatMessage(role: 'user', content: value));
+
+    final stream = _llama!.prompt(_messages);
+
+    _messages.add(ChatMessage(role: 'assistant', content: ""));
+
+    await for (final message in stream) {
+      setState(() => _messages.last.content = message);
+    }
   }
 
   @override
@@ -123,9 +134,7 @@ class _LlamaAppState extends State<LlamaApp> {
           ),
           IconButton(
             icon: const Icon(Icons.send),
-            onPressed: () {
-              _onSubmitted(_controller.text);
-            },
+            onPressed: () => _onSubmitted(_controller.text),
           ),
         ],
       ),
