@@ -55,8 +55,7 @@ struct api_params api_default_params() {
         /*.grammar                  =*/ nullptr,
         /*.grammar_lazy             =*/ nullptr,
         /*.penalties                =*/ nullptr,
-        /*.dry                      =*/ nullptr,
-        /*.logit_bias               =*/ nullptr
+        /*.dry                      =*/ nullptr
     };
 
     return result;
@@ -173,10 +172,6 @@ llama_sampler * llama_sampler_from_api_params(struct api_params params) {
 
     if (params.dry != nullptr) {
         llama_sampler_chain_add(sampler, llama_sampler_init_dry(vocab, params.dry->n_ctx_train, params.dry->multiplier, params.dry->base, params.dry->allowed_length, params.dry->penalty_last_n, params.dry->breakers, params.dry->num_breakers));
-    }
-
-    if (params.logit_bias != nullptr) {
-        llama_sampler_chain_add(sampler, llama_sampler_init_logit_bias(params.logit_bias->n_vocab, params.logit_bias->n_logit_bias, params.logit_bias->logit_bias));
     }
 
     return sampler;

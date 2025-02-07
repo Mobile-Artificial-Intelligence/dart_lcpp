@@ -14283,16 +14283,6 @@ final class dry_sampling_params extends ffi.Struct {
   external int num_breakers;
 }
 
-final class logit_bias_sampling_params extends ffi.Struct {
-  @ffi.Int()
-  external int n_vocab;
-
-  @ffi.Int()
-  external int n_logit_bias;
-
-  external ffi.Pointer<ffi.Int> logit_bias;
-}
-
 final class api_params extends ffi.Struct {
   external ffi.Pointer<ffi.Char> model_path;
 
@@ -14413,8 +14403,6 @@ final class api_params extends ffi.Struct {
   external ffi.Pointer<penalties_sampling_params> penalties;
 
   external ffi.Pointer<dry_sampling_params> dry;
-
-  external ffi.Pointer<logit_bias_sampling_params> logit_bias;
 }
 
 abstract class llama_rope_scaling_type {

@@ -1,5 +1,9 @@
 #include "llama.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct p_sampling_params {
     float p;
     size_t min_keep;
@@ -63,12 +67,6 @@ struct dry_sampling_params {
     size_t num_breakers;
 };
 
-struct logit_bias_sampling_params {
-    int32_t n_vocab;
-    int32_t n_logit_bias;
-    llama_logit_bias * logit_bias;
-};
-
 struct api_params {
     char * model_path;
 
@@ -126,7 +124,6 @@ struct api_params {
     struct grammar_lazy_sampling_params * grammar_lazy;
     struct penalties_sampling_params * penalties;
     struct dry_sampling_params * dry;
-    struct logit_bias_sampling_params * logit_bias;
 };
 
 LLAMA_API struct api_params api_default_params(void);
@@ -138,3 +135,7 @@ LLAMA_API int api_prompt(llama_chat_message * msg, size_t n_msg);
 LLAMA_API void api_stop(void);
 
 LLAMA_API void api_free(void);
+
+#ifdef __cplusplus
+}
+#endif

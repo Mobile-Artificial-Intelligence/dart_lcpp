@@ -27,8 +27,8 @@ A new Flutter FFI plugin project.
     set -u
     set -o pipefail
 
-    SOURCE_DIR="../src/llama_cpp"
-    TARGET_DIR="./llama_cpp"
+    SOURCE_DIR="../src"
+    TARGET_DIR="./"
 
     # Ensure source directory exists
     if [ ! -d "$SOURCE_DIR" ]; then
@@ -49,7 +49,8 @@ A new Flutter FFI plugin project.
     echo "Copy completed successfully."
   CMD
 
-  s.source_files = 'build-info.c',
+  s.source_files = 'api.cpp',
+                   'build-info.c',
                    'llama_cpp/src/*.cpp',
                    'llama_cpp/common/*.cpp',
                    'llama_cpp/ggml/src/*.cpp',
@@ -81,6 +82,7 @@ A new Flutter FFI plugin project.
   s.pod_target_xcconfig = {
     'DEFINES_MODULE' => 'YES',
     'USER_HEADER_SEARCH_PATHS' => [
+      '$(PODS_TARGET_SRCROOT)',
       '$(PODS_TARGET_SRCROOT)/llama_cpp/ggml/include/*.h',
       '$(PODS_TARGET_SRCROOT)/llama_cpp/ggml/include',
       '$(PODS_TARGET_SRCROOT)/llama_cpp/include',
@@ -98,6 +100,7 @@ A new Flutter FFI plugin project.
       '$(PODS_TARGET_SRCROOT)/llama_cpp/common'
     ],
     'HEADER_SEARCH_PATHS' => [
+      '$(PODS_TARGET_SRCROOT)',
       '$(PODS_TARGET_SRCROOT)/llama_cpp/ggml/include',
       '$(PODS_TARGET_SRCROOT)/llama_cpp/ggml/include/*.h',
       '$(PODS_TARGET_SRCROOT)/llama_cpp/include',
