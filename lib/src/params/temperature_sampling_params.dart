@@ -24,12 +24,12 @@ class TemperatureSamplingParams implements NativeParam {
   };
 
   @override
-  ffi.Pointer<temperature_sampling_params> toNative() {
-    final samplingParams = calloc<temperature_sampling_params>();
+  temperature_sampling_params toNative() {
+    final samplingParams = calloc<temperature_sampling_params>().ref;
 
-    samplingParams.ref.temperature = temperature;
-    samplingParams.ref.delta = delta ?? -1;
-    samplingParams.ref.exponent = exponent ?? -1;
+    samplingParams.temperature = temperature;
+    samplingParams.delta = delta ?? -1;
+    samplingParams.exponent = exponent ?? -1;
 
     return samplingParams;
   }

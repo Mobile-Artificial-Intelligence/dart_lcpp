@@ -28,5 +28,5 @@ migrate_working_dir/
 .dart_tool/
 build/
 
-macos/llama_cpp
-ios/llama_cpp
+macos/src
+ios/src

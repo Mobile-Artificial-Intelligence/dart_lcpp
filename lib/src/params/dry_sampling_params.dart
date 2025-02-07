@@ -36,16 +36,16 @@ class DrySamplingParams implements NativeParam {
   };
 
   @override
-  ffi.Pointer<dry_sampling_params> toNative() {
-    final drySamplingParams = calloc<dry_sampling_params>();
+  dry_sampling_params toNative() {
+    final drySamplingParams = calloc<dry_sampling_params>().ref;
 
-    drySamplingParams.ref.n_ctx_train = nCtxTrain;
-    drySamplingParams.ref.multiplier = multiplier;
-    drySamplingParams.ref.base = dryBase;
-    drySamplingParams.ref.allowed_length = allowedLength;
-    drySamplingParams.ref.penalty_last_n = penaltyLastN;
-    drySamplingParams.ref.breakers = convertListToPointer(sequenceBreakers);
-    drySamplingParams.ref.num_breakers = sequenceBreakers.length;
+    drySamplingParams.n_ctx_train = nCtxTrain;
+    drySamplingParams.multiplier = multiplier;
+    drySamplingParams.base = dryBase;
+    drySamplingParams.allowed_length = allowedLength;
+    drySamplingParams.penalty_last_n = penaltyLastN;
+    drySamplingParams.breakers = convertListToPointer(sequenceBreakers);
+    drySamplingParams.num_breakers = sequenceBreakers.length;
 
     return drySamplingParams;
   }

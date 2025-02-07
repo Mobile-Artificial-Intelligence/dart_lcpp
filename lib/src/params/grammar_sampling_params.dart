@@ -20,11 +20,11 @@ class GrammarSamplingParams implements NativeParam {
   };
 
   @override
-  ffi.Pointer<grammar_sampling_params> toNative() {
-    final samplingParams = calloc<grammar_sampling_params>();
+  grammar_sampling_params toNative() {
+    final samplingParams = calloc<grammar_sampling_params>().ref;
 
-    samplingParams.ref.str = str.toNativeUtf8().cast<ffi.Char>();
-    samplingParams.ref.root = root.toNativeUtf8().cast<ffi.Char>();
+    samplingParams.str = str.toNativeUtf8().cast<ffi.Char>();
+    samplingParams.root = root.toNativeUtf8().cast<ffi.Char>();
 
     return samplingParams;
   }

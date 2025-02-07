@@ -2,10 +2,8 @@ library;
 
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:ffi' as ffi;
 import 'dart:io';
-import 'dart:isolate';
 
 import 'package:ffi/ffi.dart';
 
@@ -27,9 +25,7 @@ part 'src/params/penalties_sampling_params.dart';
 part 'src/params/temperature_sampling_params.dart';
 part 'src/params/xtc_sampling_params.dart';
 
-part 'src/llama_cpp.dart';
-part 'src/library.dart';
-part 'src/llama_cpp_native.dart';
 part 'src/chat_message.dart';
-part 'src/sampling_params.dart';
+part 'src/library.dart';
+part 'src/llama_native.dart';
 part 'src/utilities.dart';

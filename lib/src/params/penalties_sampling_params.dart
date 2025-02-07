@@ -28,13 +28,13 @@ class PenaltiesSamplingParams implements NativeParam {
   };
 
   @override
-  ffi.Pointer<penalties_sampling_params> toNative() {
-    final samplingParams = calloc<penalties_sampling_params>();
+  penalties_sampling_params toNative() {
+    final samplingParams = calloc<penalties_sampling_params>().ref;
 
-    samplingParams.ref.last_n = lastN;
-    samplingParams.ref.repeat = repeat;
-    samplingParams.ref.freq = frequency;
-    samplingParams.ref.present = present;
+    samplingParams.last_n = lastN;
+    samplingParams.repeat = repeat;
+    samplingParams.freq = frequency;
+    samplingParams.present = present;
 
     return samplingParams;
   }

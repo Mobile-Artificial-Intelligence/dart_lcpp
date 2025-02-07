@@ -20,11 +20,11 @@ class PSamplingParams implements NativeParam {
   };
 
   @override
-  ffi.Pointer<p_sampling_params> toNative() {
-    final samplingParams = calloc<p_sampling_params>();
+  p_sampling_params toNative() {
+    final samplingParams = calloc<p_sampling_params>().ref;
 
-    samplingParams.ref.p = p;
-    samplingParams.ref.min_keep = minKeep;
+    samplingParams.p = p;
+    samplingParams.min_keep = minKeep;
 
     return samplingParams;
   }

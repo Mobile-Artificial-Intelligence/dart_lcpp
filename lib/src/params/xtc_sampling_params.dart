@@ -28,13 +28,13 @@ class XtcSamplingParams implements NativeParam {
   };
 
   @override
-  ffi.Pointer<xtc_sampling_params> toNative() {
-    final samplingParams = calloc<xtc_sampling_params>();
+  xtc_sampling_params toNative() {
+    final samplingParams = calloc<xtc_sampling_params>().ref;
 
-    samplingParams.ref.probability = p;
-    samplingParams.ref.threshold = t;
-    samplingParams.ref.min_keep = minKeep;
-    samplingParams.ref.seed = seed;
+    samplingParams.probability = p;
+    samplingParams.threshold = t;
+    samplingParams.min_keep = minKeep;
+    samplingParams.seed = seed;
 
     return samplingParams;
   }

@@ -19,18 +19,17 @@ class llama {
           lookup)
       : _lookup = lookup;
 
-  ffi.Pointer<api_params> api_default_params() {
+  api_params api_default_params() {
     return _api_default_params();
   }
 
   late final _api_default_paramsPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<api_params> Function()>>(
-          'api_default_params');
+      _lookup<ffi.NativeFunction<api_params Function()>>('api_default_params');
   late final _api_default_params =
-      _api_default_paramsPtr.asFunction<ffi.Pointer<api_params> Function()>();
+      _api_default_paramsPtr.asFunction<api_params Function()>();
 
   int api_init(
-    ffi.Pointer<api_params> params,
+    api_params params,
   ) {
     return _api_init(
       params,
@@ -38,10 +37,8 @@ class llama {
   }
 
   late final _api_initPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(ffi.Pointer<api_params>)>>(
-          'api_init');
-  late final _api_init =
-      _api_initPtr.asFunction<int Function(ffi.Pointer<api_params>)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(api_params)>>('api_init');
+  late final _api_init = _api_initPtr.asFunction<int Function(api_params)>();
 
   int api_prompt(
     ffi.Pointer<ffi.Int> msg,
@@ -14301,16 +14298,16 @@ final class api_params extends ffi.Struct {
   @ffi.Bool()
   external bool check_tensors;
 
-  @ffi.Int()
+  @ffi.UnsignedInt()
   external int n_ctx;
 
-  @ffi.Int()
+  @ffi.UnsignedInt()
   external int n_batch;
 
-  @ffi.Int()
+  @ffi.UnsignedInt()
   external int n_ubatch;
 
-  @ffi.Int()
+  @ffi.UnsignedInt()
   external int n_seq_max;
 
   @ffi.Int()
@@ -14346,7 +14343,7 @@ final class api_params extends ffi.Struct {
   @ffi.Double()
   external double yarn_beta_slow;
 
-  @ffi.Int()
+  @ffi.UnsignedInt()
   external int yarn_orig_ctx;
 
   @ffi.Double()
@@ -14379,33 +14376,33 @@ final class api_params extends ffi.Struct {
   @ffi.Bool()
   external bool infill;
 
-  @ffi.Int()
+  @ffi.UnsignedInt()
   external int seed;
 
   @ffi.Int()
   external int top_k;
 
-  external ffi.Pointer<p_sampling_params> top_p;
+  external p_sampling_params top_p;
 
-  external ffi.Pointer<p_sampling_params> min_p;
+  external p_sampling_params min_p;
 
-  external ffi.Pointer<p_sampling_params> typical_p;
+  external p_sampling_params typical_p;
 
-  external ffi.Pointer<temperature_sampling_params> temperature;
+  external temperature_sampling_params temperature;
 
-  external ffi.Pointer<xtc_sampling_params> xtc;
+  external xtc_sampling_params xtc;
 
-  external ffi.Pointer<mirostat_sampling_params> mirostat;
+  external mirostat_sampling_params mirostat;
 
-  external ffi.Pointer<mirostat_v2_sampling_params> mirostat_v2;
+  external mirostat_v2_sampling_params mirostat_v2;
 
-  external ffi.Pointer<grammar_sampling_params> grammar;
+  external grammar_sampling_params grammar;
 
-  external ffi.Pointer<grammar_lazy_sampling_params> grammar_lazy;
+  external grammar_lazy_sampling_params grammar_lazy;
 
-  external ffi.Pointer<penalties_sampling_params> penalties;
+  external penalties_sampling_params penalties;
 
-  external ffi.Pointer<dry_sampling_params> dry;
+  external dry_sampling_params dry;
 }
 
 abstract class llama_rope_scaling_type {

@@ -32,14 +32,14 @@ class MirostatSamplingParams implements NativeParam {
   };
 
   @override
-  ffi.Pointer<mirostat_sampling_params> toNative() {
-    final samplingParams = calloc<mirostat_sampling_params>();
+  mirostat_sampling_params toNative() {
+    final samplingParams = calloc<mirostat_sampling_params>().ref;
 
-    samplingParams.ref.n_vocab = nVocab;
-    samplingParams.ref.seed = seed;
-    samplingParams.ref.tau = tau;
-    samplingParams.ref.eta = eta;
-    samplingParams.ref.m = m;
+    samplingParams.n_vocab = nVocab;
+    samplingParams.seed = seed;
+    samplingParams.tau = tau;
+    samplingParams.eta = eta;
+    samplingParams.m = m;
 
     return samplingParams;
   }

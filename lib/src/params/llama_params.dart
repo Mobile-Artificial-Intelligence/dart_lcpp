@@ -273,172 +273,172 @@ class LlamaParams implements NativeParam {
   String toJson() => jsonEncode(toMap());
 
   @override
-  ffi.Pointer<api_params> toNative() {
-    final params = lib.api_default_params();
+  api_params toNative() {
+    final api_params params = lib.api_default_params();
 
-    params.ref.model_path = modelPath.toNativeUtf8().cast<ffi.Char>();
+    params.model_path = modelPath.toNativeUtf8().cast<ffi.Char>();
     
     if (vocabOnly != null) {
-      params.ref.vocab_only = vocabOnly!;
+      params.vocab_only = vocabOnly!;
     }
 
     if (useMmap != null) {
-      params.ref.use_mmap = useMmap!;
+      params.use_mmap = useMmap!;
     }
 
     if (useMlock != null) {
-      params.ref.use_mlock = useMlock!;
+      params.use_mlock = useMlock!;
     }
 
     if (checkTensors != null) {
-      params.ref.check_tensors = checkTensors!;
+      params.check_tensors = checkTensors!;
     }
 
     if (nCtx != null) {
-      params.ref.n_ctx = nCtx!;
+      params.n_ctx = nCtx!;
     }
 
     if (nBatch != null) {
-      params.ref.n_batch = nBatch!;
+      params.n_batch = nBatch!;
     }
 
     if (nUBatch != null) {
-      params.ref.n_ubatch = nUBatch!;
+      params.n_ubatch = nUBatch!;
     }
 
     if (nSeqMax != null) {
-      params.ref.n_seq_max = nSeqMax!;
+      params.n_seq_max = nSeqMax!;
     }
 
     if (nThreads != null) {
-      params.ref.n_threads = nThreads!;
+      params.n_threads = nThreads!;
     }
 
     if (nThreadsBatch != null) {
-      params.ref.n_threads_batch = nThreadsBatch!;
+      params.n_threads_batch = nThreadsBatch!;
     }
 
     if (ropeScalingType != null) {
-      params.ref.rope_scaling_type = ropeScalingType!.index;
+      params.rope_scaling_type = ropeScalingType!.index;
     }
 
     if (poolingType != null) {
-      params.ref.pooling_type = poolingType!.index;
+      params.pooling_type = poolingType!.index;
     }
 
     if (attentionType != null) {
-      params.ref.attention_type = attentionType!.index;
+      params.attention_type = attentionType!.index;
     }
 
     if (ropeFrequencyBase != null) {
-      params.ref.rope_freq_base = ropeFrequencyBase!;
+      params.rope_freq_base = ropeFrequencyBase!;
     }
 
     if (ropeFrequencyScale != null) {
-      params.ref.rope_freq_scale = ropeFrequencyScale!;
+      params.rope_freq_scale = ropeFrequencyScale!;
     }
 
     if (yarnExtrapolationFactor != null) {
-      params.ref.yarn_ext_factor = yarnExtrapolationFactor!;
+      params.yarn_ext_factor = yarnExtrapolationFactor!;
     }
 
     if (yarnAttenuationFactor != null) {
-      params.ref.yarn_attn_factor = yarnAttenuationFactor!;
+      params.yarn_attn_factor = yarnAttenuationFactor!;
     }
 
     if (yarnBetaFast != null) {
-      params.ref.yarn_beta_fast = yarnBetaFast!;
+      params.yarn_beta_fast = yarnBetaFast!;
     }
 
     if (yarnBetaSlow != null) {
-      params.ref.yarn_beta_slow = yarnBetaSlow!;
+      params.yarn_beta_slow = yarnBetaSlow!;
     }
 
     if (yarnOriginalContext != null) {
-      params.ref.yarn_orig_ctx = yarnOriginalContext!;
+      params.yarn_orig_ctx = yarnOriginalContext!;
     }
 
     if (defragmentationThreshold != null) {
-      params.ref.defrag_thold = defragmentationThreshold!;
+      params.defrag_thold = defragmentationThreshold!;
     }
 
     if (typeK != null) {
-      params.ref.type_k = typeK!.index;
+      params.type_k = typeK!.index;
     }
 
     if (typeV != null) {
-      params.ref.type_v = typeV!.index;
+      params.type_v = typeV!.index;
     }
 
     if (logitsAll != null) {
-      params.ref.logits_all = logitsAll!;
+      params.logits_all = logitsAll!;
     }
 
     if (embeddings != null) {
-      params.ref.embeddings = embeddings!;
+      params.embeddings = embeddings!;
     }
 
     if (offloadKqv != null) {
-      params.ref.offload_kqv = offloadKqv!;
+      params.offload_kqv = offloadKqv!;
     }
 
     if (flashAttention != null) {
-      params.ref.flash_attn = flashAttention!;
+      params.flash_attn = flashAttention!;
     }
     
     if (noPerformance != null) {
-      params.ref.no_perf = noPerformance!;
+      params.no_perf = noPerformance!;
     }
 
-    params.ref.greedy = greedy;
-    params.ref.infill = infill;
+    params.greedy = greedy;
+    params.infill = infill;
 
     if (seed != null) {
-      params.ref.seed = seed!;
+      params.seed = seed!;
     }
 
     if (topK != null) {
-      params.ref.top_k = topK!;
+      params.top_k = topK!;
     }
 
     if (topP != null) {
-      params.ref.top_p = topP!.toNative();
+      params.top_p = topP!.toNative();
     }
 
     if (minP != null) {
-      params.ref.min_p = minP!.toNative();
+      params.min_p = minP!.toNative();
     }
 
     if (typicalP != null) {
-      params.ref.typical_p = typicalP!.toNative();
+      params.typical_p = typicalP!.toNative();
     }
 
     if (temperature != null) {
-      params.ref.temperature = temperature!.toNative();
+      params.temperature = temperature!.toNative();
     }
 
     if (xtc != null) {
-      params.ref.xtc = xtc!.toNative();
+      params.xtc = xtc!.toNative();
     }
 
     if (mirostat != null) {
-      params.ref.mirostat = mirostat!.toNative();
+      params.mirostat = mirostat!.toNative();
     }
 
     if (mirostatV2 != null) {
-      params.ref.mirostat_v2 = mirostatV2!.toNative();
+      params.mirostat_v2 = mirostatV2!.toNative();
     }
 
     if (grammar != null) {
-      params.ref.grammar = grammar!.toNative();
+      params.grammar = grammar!.toNative();
     }
 
     if (penalties != null) {
-      params.ref.penalties = penalties!.toNative();
+      params.penalties = penalties!.toNative();
     }
 
     if (dry != null) {
-      params.ref.dry = dry!.toNative();
+      params.dry = dry!.toNative();
     }
 
     return params;

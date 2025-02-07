@@ -78,10 +78,10 @@ struct api_params {
     bool check_tensors;
 
     // llama_context_params
-    int n_ctx;
-    int n_batch;
-    int n_ubatch;
-    int n_seq_max;
+    unsigned int n_ctx;
+    unsigned int n_batch;
+    unsigned int n_ubatch;
+    unsigned int n_seq_max;
     int n_threads;
     int n_threads_batch;
 
@@ -96,7 +96,7 @@ struct api_params {
     double yarn_attn_factor;
     double yarn_beta_fast;
     double yarn_beta_slow;
-    int yarn_orig_ctx;
+    unsigned int yarn_orig_ctx;
 
     double defrag_thold;
 
@@ -112,24 +112,24 @@ struct api_params {
     // llama_sampling
     bool greedy;
     bool infill;
-    int seed;
+    unsigned int seed;
     int top_k;
-    struct p_sampling_params * top_p;
-    struct p_sampling_params * min_p;
-    struct p_sampling_params * typical_p;
-    struct temperature_sampling_params * temperature;
-    struct xtc_sampling_params * xtc;
-    struct mirostat_sampling_params * mirostat;
-    struct mirostat_v2_sampling_params * mirostat_v2;
-    struct grammar_sampling_params * grammar;
-    struct grammar_lazy_sampling_params * grammar_lazy;
-    struct penalties_sampling_params * penalties;
-    struct dry_sampling_params * dry;
+    struct p_sampling_params top_p;
+    struct p_sampling_params min_p;
+    struct p_sampling_params typical_p;
+    struct temperature_sampling_params temperature;
+    struct xtc_sampling_params xtc;
+    struct mirostat_sampling_params mirostat;
+    struct mirostat_v2_sampling_params mirostat_v2;
+    struct grammar_sampling_params grammar;
+    struct grammar_lazy_sampling_params grammar_lazy;
+    struct penalties_sampling_params penalties;
+    struct dry_sampling_params dry;
 };
 
-LLAMA_API struct api_params * api_default_params(void);
+LLAMA_API struct api_params api_default_params(void);
 
-LLAMA_API int api_init(struct api_params * params);
+LLAMA_API int api_init(struct api_params params);
 
 LLAMA_API int api_prompt(llama_chat_message * msg, size_t n_msg);
 

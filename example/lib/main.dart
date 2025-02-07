@@ -21,7 +21,6 @@ class LlamaApp extends StatefulWidget {
 class _LlamaAppState extends State<LlamaApp> {
   final TextEditingController _controller = TextEditingController();
   final List<ChatMessage> _messages = [];
-  LlamaCppNative? _model;
   String? _modelPath;
 
   void _loadModel() async {
@@ -43,47 +42,24 @@ class _LlamaAppState extends State<LlamaApp> {
       throw Exception('File does not exist');
     }
 
-    final llamaCpp = LlamaCppNative.fromParams(
-      result.files.single.path!,
-      ModelParams(),
-      ContextParams(
+    final llamaCpp = LlamaNative.fromParams(
+      LlamaParams(
+        modelPath: result.files.single.path!,
         nCtx: 2048,
-        nBatch: 2048
-      ),
-      SamplingParams(
-        minP: MinPArguments(p: 0.05, minKeep: 1),
-        temperature: TemperatureArguments(temperature: 0.8),
+        nBatch: 2048,
+        minP: PSamplingParams(p: 0.05, minKeep: 1),
+        temperature: TemperatureSamplingParams(temperature: 0.8),
         seed: Random().nextInt(1000000)
       )
     );
 
     setState(() {
-      _model = llamaCpp;
       _modelPath = result.files.single.path;
     });
   }
 
   void _onSubmitted(String value) async {
-    if (_model == null) {
-      return;
-    }
-
-    setState(() {
-      _messages.add(ChatMessage(role: 'user', content: value));
-      _controller.clear();
-    });
-
-    Stream<String> stream = _model!.prompt(_messages);
-
-    setState(() {
-      _messages.add(ChatMessage(role: 'assistant', content: ""));
-    });
-
-    await for (final message in stream) {
-      setState(() {
-        _messages.last.content = message;
-      });
-    }
+    
   }
 
   @override

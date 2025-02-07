@@ -28,7 +28,7 @@ A new Flutter FFI plugin project.
     set -o pipefail
 
     SOURCE_DIR="../src"
-    TARGET_DIR="./"
+    TARGET_DIR="./src"
 
     # Ensure source directory exists
     if [ ! -d "$SOURCE_DIR" ]; then
@@ -49,66 +49,66 @@ A new Flutter FFI plugin project.
     echo "Copy completed successfully."
   CMD
 
-  s.source_files = 'api.cpp',
-                   'build-info.c',
-                   'llama_cpp/src/*.cpp',
-                   'llama_cpp/common/*.cpp',
-                   'llama_cpp/ggml/src/*.cpp',
-                   'llama_cpp/ggml/src/ggml-cpu/*.cpp',
-                   'llama_cpp/ggml/src/ggml-cpu/*.c',
-                   'llama_cpp/ggml/src/ggml-metal/*.cpp',
-                   'llama_cpp/ggml/src/ggml-metal/*.m',
-                   'llama_cpp/src/*.c',
-                   'llama_cpp/src/llama.cpp',
-                   'llama_cpp/src/llama-sampling.cpp',
-                   'llama_cpp/src/llama-grammar.cpp',
-                   'llama_cpp/ggml/src/ggml.c',
-                   'llama_cpp/ggml/src/ggml-alloc.c',
-                   'llama_cpp/ggml/src/ggml-backend.c',
-                   'llama_cpp/ggml/src/ggml-metal.m',
-                   'llama_cpp/ggml/src/ggml-quants.c',
-                   'llama_cpp/ggml/src/ggml-aarch64.c',
-                   'llama_cpp/src/llama-vocab.cpp',
-                   'llama_cpp/src/unicode.cpp',
-                   'llama_cpp/src/unicode-data.cpp',
-                   'llama_cpp/common/common.cpp',
-                   'llama_cpp/common/build-info.cpp',
-                   'llama_cpp/common/grammar-parser.cpp',
-                   'llama_cpp/common/json-schema-to-grammar.cpp',
-                   'llama_cpp/common/sampling.cpp',
-                   'llama_cpp/common/stb_image.h',
+  s.source_files = 'build-info.c',
+                   'src/api.cpp',
+                   'src/llama_cpp/src/*.cpp',
+                   'src/llama_cpp/common/*.cpp',
+                   'src/llama_cpp/ggml/src/*.cpp',
+                   'src/llama_cpp/ggml/src/ggml-cpu/*.cpp',
+                   'src/llama_cpp/ggml/src/ggml-cpu/*.c',
+                   'src/llama_cpp/ggml/src/ggml-metal/*.cpp',
+                   'src/llama_cpp/ggml/src/ggml-metal/*.m',
+                   'src/llama_cpp/src/*.c',
+                   'src/llama_cpp/src/llama.cpp',
+                   'src/llama_cpp/src/llama-sampling.cpp',
+                   'src/llama_cpp/src/llama-grammar.cpp',
+                   'src/llama_cpp/ggml/src/ggml.c',
+                   'src/llama_cpp/ggml/src/ggml-alloc.c',
+                   'src/llama_cpp/ggml/src/ggml-backend.c',
+                   'src/llama_cpp/ggml/src/ggml-metal.m',
+                   'src/llama_cpp/ggml/src/ggml-quants.c',
+                   'src/llama_cpp/ggml/src/ggml-aarch64.c',
+                   'src/llama_cpp/src/llama-vocab.cpp',
+                   'src/llama_cpp/src/unicode.cpp',
+                   'src/llama_cpp/src/unicode-data.cpp',
+                   'src/llama_cpp/common/common.cpp',
+                   'src/llama_cpp/common/build-info.cpp',
+                   'src/llama_cpp/common/grammar-parser.cpp',
+                   'src/llama_cpp/common/json-schema-to-grammar.cpp',
+                   'src/llama_cpp/common/sampling.cpp',
+                   'src/llama_cpp/common/stb_image.h',
   s.frameworks = 'Foundation', 'Metal', 'MetalKit'
   s.platform = :osx, '10.15'
   s.pod_target_xcconfig = {
     'DEFINES_MODULE' => 'YES',
     'USER_HEADER_SEARCH_PATHS' => [
-      '$(PODS_TARGET_SRCROOT)',
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/ggml/include/*.h',
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/ggml/include',
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/include',
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/src',
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/**/*.h', 
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/common/**/*.h',
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/ggml/include',
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/ggml/src',
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/ggml/src/ggml-cpu',
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/include',
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/src',
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/ggml/include',
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/ggml/src',
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/common',
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/common'
+      '$(PODS_TARGET_SRCROOT)/src',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/ggml/include/*.h',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/ggml/include',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/include',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/src',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/**/*.h', 
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/common/**/*.h',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/ggml/include',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/ggml/src',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/ggml/src/ggml-cpu',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/include',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/src',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/ggml/include',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/ggml/src',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/common',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/common'
     ],
     'HEADER_SEARCH_PATHS' => [
-      '$(PODS_TARGET_SRCROOT)',
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/ggml/include',
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/ggml/include/*.h',
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/include',
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/src',
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/**/*.h', 
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/common/**/*.h',
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/common',
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/common'
+      '$(PODS_TARGET_SRCROOT)/src',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/ggml/include',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/ggml/include/*.h',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/include',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/src',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/**/*.h', 
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/common/**/*.h',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/common',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/common'
     ],
     'OTHER_CFLAGS' => ['$(inherited)', '-O3', '-flto', '-fno-objc-arc', '-w', '-I$(PODS_TARGET_SRCROOT)/llama_cpp/include', '-I$(PODS_TARGET_SRCROOT)/llama_cpp/ggml/include', '-I$(PODS_TARGET_SRCROOT)/llama_cpp/common', '-DGGML_LLAMAFILE=OFF', '-DGGML_USE_CPU'],
     'OTHER_CPLUSPLUSFLAGS' => ['$(inherited)', '-O3', '-flto', '-fno-objc-arc', '-w', '-std=c++17', '-fpermissive', '-I$(PODS_TARGET_SRCROOT)/llama_cpp/include', '-I$(PODS_TARGET_SRCROOT)/llama_cpp/ggml/include', '-I$(PODS_TARGET_SRCROOT)/llama_cpp/common', '-DGGML_LLAMAFILE=OFF', '-DGGML_USE_CPU'],
@@ -117,14 +117,14 @@ A new Flutter FFI plugin project.
   s.script_phases = [
     {
       :name => 'Build Metal Library',
-      :input_files => ["${PODS_TARGET_SRCROOT}/llama_cpp/ggml/src/ggml-metal.metal"],
+      :input_files => ["${PODS_TARGET_SRCROOT}/src/llama_cpp/ggml/src/ggml-metal.metal"],
       :output_files => ["${METAL_LIBRARY_OUTPUT_DIR}/default.metallib"],
       :execution_position => :after_compile,
       :script => <<-SCRIPT
       set -e
       set -u
       set -o pipefail
-      cd "${PODS_TARGET_SRCROOT}/llama_cpp"
+      cd "${PODS_TARGET_SRCROOT}/src/llama_cpp"
       xcrun metal -target "air64-${LLVM_TARGET_TRIPLE_VENDOR}-${LLVM_TARGET_TRIPLE_OS_VERSION}${LLVM_TARGET_TRIPLE_SUFFIX:-\"\"}" -ffast-math -std=ios-metal2.3 -o "${METAL_LIBRARY_OUTPUT_DIR}/default.metallib" ggml/src/ggml-metal/*.metal
       SCRIPT
     }
