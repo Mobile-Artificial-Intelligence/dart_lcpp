@@ -19,17 +19,18 @@ class llama {
           lookup)
       : _lookup = lookup;
 
-  int api_default_params() {
+  ffi.Pointer<api_params> api_default_params() {
     return _api_default_params();
   }
 
   late final _api_default_paramsPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function()>>('api_default_params');
+      _lookup<ffi.NativeFunction<ffi.Pointer<api_params> Function()>>(
+          'api_default_params');
   late final _api_default_params =
-      _api_default_paramsPtr.asFunction<int Function()>();
+      _api_default_paramsPtr.asFunction<ffi.Pointer<api_params> Function()>();
 
   int api_init(
-    api_params params,
+    ffi.Pointer<api_params> params,
   ) {
     return _api_init(
       params,
@@ -37,8 +38,10 @@ class llama {
   }
 
   late final _api_initPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(api_params)>>('api_init');
-  late final _api_init = _api_initPtr.asFunction<int Function(api_params)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(ffi.Pointer<api_params>)>>(
+          'api_init');
+  late final _api_init =
+      _api_initPtr.asFunction<int Function(ffi.Pointer<api_params>)>();
 
   int api_prompt(
     ffi.Pointer<ffi.Int> msg,
@@ -14193,7 +14196,7 @@ final class xtc_sampling_params extends ffi.Struct {
   @ffi.Int()
   external int min_keep;
 
-  @ffi.Int()
+  @ffi.UnsignedInt()
   external int seed;
 }
 
@@ -14201,7 +14204,7 @@ final class mirostat_sampling_params extends ffi.Struct {
   @ffi.Int()
   external int n_vocab;
 
-  @ffi.Int()
+  @ffi.UnsignedInt()
   external int seed;
 
   @ffi.Float()
@@ -14215,7 +14218,7 @@ final class mirostat_sampling_params extends ffi.Struct {
 }
 
 final class mirostat_v2_sampling_params extends ffi.Struct {
-  @ffi.Int()
+  @ffi.UnsignedInt()
   external int seed;
 
   @ffi.Float()
@@ -14286,17 +14289,17 @@ final class dry_sampling_params extends ffi.Struct {
 final class api_params extends ffi.Struct {
   external ffi.Pointer<ffi.Char> model_path;
 
-  @ffi.Int()
-  external int vocab_only;
+  @ffi.Bool()
+  external bool vocab_only;
 
-  @ffi.Int()
-  external int use_mmap;
+  @ffi.Bool()
+  external bool use_mmap;
 
-  @ffi.Int()
-  external int use_mlock;
+  @ffi.Bool()
+  external bool use_mlock;
 
-  @ffi.Int()
-  external int check_tensors;
+  @ffi.Bool()
+  external bool check_tensors;
 
   @ffi.Int()
   external int n_ctx;
@@ -14355,26 +14358,26 @@ final class api_params extends ffi.Struct {
   @ffi.Int32()
   external int type_v;
 
-  @ffi.Int()
-  external int logits_all;
+  @ffi.Bool()
+  external bool logits_all;
 
-  @ffi.Int()
-  external int embeddings;
+  @ffi.Bool()
+  external bool embeddings;
 
-  @ffi.Int()
-  external int offload_kqv;
+  @ffi.Bool()
+  external bool offload_kqv;
 
-  @ffi.Int()
-  external int flash_attn;
+  @ffi.Bool()
+  external bool flash_attn;
 
-  @ffi.Int()
-  external int no_perf;
+  @ffi.Bool()
+  external bool no_perf;
 
-  @ffi.Int()
-  external int greedy;
+  @ffi.Bool()
+  external bool greedy;
 
-  @ffi.Int()
-  external int infill;
+  @ffi.Bool()
+  external bool infill;
 
   @ffi.Int()
   external int seed;
@@ -15704,6 +15707,12 @@ typedef Dartggml_vec_dot_tFunction = void Function(
     int nrc);
 typedef ggml_threadpool_t = ffi.Pointer<ggml_threadpool>;
 
+const int __bool_true_false_are_defined = 1;
+
+const int true1 = 1;
+
+const int false1 = 0;
+
 const int __has_safe_buffers = 1;
 
 const int __DARWIN_ONLY_64_BIT_INO_T = 1;
@@ -16653,12 +16662,6 @@ const int L_tmpnam = 1024;
 const int TMP_MAX = 308915776;
 
 const int L_ctermid = 1024;
-
-const int __bool_true_false_are_defined = 1;
-
-const int true1 = 1;
-
-const int false1 = 0;
 
 const int LLAMA_DEFAULT_SEED = 4294967295;
 

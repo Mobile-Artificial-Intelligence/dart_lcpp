@@ -5,7 +5,7 @@ static llama_model * model = nullptr;
 static llama_context * ctx = nullptr;
 static llama_sampler * smpl = nullptr;
 
-struct api_params api_default_params() {
+struct api_params * api_default_params() {
     auto default_model_params = llama_model_default_params();
     auto default_context_params = llama_context_default_params();
 
@@ -58,7 +58,7 @@ struct api_params api_default_params() {
         /*.dry                      =*/ nullptr
     };
 
-    return result;
+    return &result;
 }
 
 llama_model * llama_model_from_api_params(struct api_params params) {
@@ -177,12 +177,12 @@ llama_sampler * llama_sampler_from_api_params(struct api_params params) {
     return sampler;
 }
 
-int api_init(struct api_params params) {
+int api_init(struct api_params * params) {
     ggml_backend_load_all();
 
-    model = llama_model_from_api_params(params);
+    model = llama_model_from_api_params(*params);
 
-    ctx = llama_context_from_api_params(params);
+    ctx = llama_context_from_api_params(*params);
 
-    smpl = llama_sampler_from_api_params(params);
+    smpl = llama_sampler_from_api_params(*params);
 }
