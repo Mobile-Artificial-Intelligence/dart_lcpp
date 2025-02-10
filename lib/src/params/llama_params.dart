@@ -319,15 +319,15 @@ class LlamaParams implements NativeParam {
     }
 
     if (ropeScalingType != null) {
-      params.rope_scaling_type = ropeScalingType!.index;
+      params.rope_scaling_typeAsInt = ropeScalingType!.index - 1;
     }
 
     if (poolingType != null) {
-      params.pooling_type = poolingType!.index;
+      params.pooling_typeAsInt = poolingType!.index - 1;
     }
 
     if (attentionType != null) {
-      params.attention_type = attentionType!.index;
+      params.attention_typeAsInt = attentionType!.index - 1;
     }
 
     if (ropeFrequencyBase != null) {
@@ -363,11 +363,11 @@ class LlamaParams implements NativeParam {
     }
 
     if (typeK != null) {
-      params.type_k = typeK!.index;
+      params.type_kAsInt = typeK!.index;
     }
 
     if (typeV != null) {
-      params.type_v = typeV!.index;
+      params.type_vAsInt = typeV!.index;
     }
 
     if (logitsAll != null) {
